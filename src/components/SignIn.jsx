@@ -14,7 +14,7 @@ const QUESTIONS = [
     label: 'Username',
   },
   {
-    type: 'text',
+    type: 'password',
     id: 'password',
     label: 'Password',
   },
@@ -25,22 +25,20 @@ function SignIn({ mode }) {
   const navigate = useNavigate();
   const [inlineMessages, setInlineMessages] = useState([]);
 
+  const saveToken = ({ data }) => {
+    setToken(data.token);
+    navigate('/');
+  };
   const onSignIn = (values) => axios
     .get('http://localhost:8000/tokens', { params: values })
-    .then(({ token }) => {
-      setToken(token);
-      navigate('/');
-    })
+    .then(saveToken)
     .catch(({ message }) => {
       inlineMessages.push({ type: 'error', message });
       setInlineMessages([...inlineMessages]);
     });
   const onSignUp = (values) => axios
     .post('http://localhost:8000/users', values)
-    .then(({ token }) => {
-      setToken(token);
-      navigate('/');
-    })
+    .then(saveToken)
     .catch(({ message }) => {
       inlineMessages.push({ type: 'error', message });
       setInlineMessages([...inlineMessages]);
