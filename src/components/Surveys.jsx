@@ -4,6 +4,7 @@ import React, {
   useState,
 } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import UserContext from '../UserContext';
 import InlineMessage from './InlineMessage';
@@ -42,7 +43,33 @@ function Surveys() {
           There are no surveys available.
         </InlineMessage>
       )}
-      {surveys}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {surveys.map(({
+            id,
+            name,
+            createdAt,
+            updatedAt,
+          }) => (
+            <tr key={id}>
+              <td>{name}</td>
+              <td>{createdAt}</td>
+              <td>{updatedAt}</td>
+              <td>
+                <Link to={`/surveys/${id}`}>View</Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
