@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import UserContext from '../UserContext';
 import InlineMessage from './InlineMessage';
 
+import routes from '../routes';
+
 function Surveys() {
   const { token } = useContext(UserContext);
   const [surveys, setSurveys] = useState([]);
@@ -43,6 +45,7 @@ function Surveys() {
           There are no surveys available.
         </InlineMessage>
       )}
+      <Link to={routes.newSurvey}>New Survey</Link>
       <table>
         <thead>
           <tr>

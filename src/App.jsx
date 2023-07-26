@@ -12,12 +12,9 @@ import { UserContextProvider } from './UserContext';
 import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Surveys from './components/Surveys';
+import SurveyMaker from './components/SurveyMaker';
 
-const routes = {
-  signIn: 'sign-in',
-  signUp: 'sign-up',
-  surveys: 'surveys',
-};
+import routes from './routes';
 
 function Layout() {
   return (
@@ -45,6 +42,10 @@ function App() {
             <Route
               path={routes.surveys}
               element={<Surveys />}
+            />
+            <Route
+              path={routes.newSurvey}
+              element={<SurveyMaker />}
             />
             <Route
               path="*"
