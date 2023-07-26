@@ -27,6 +27,7 @@ function Form({ questions, onSubmit }) {
                 [question.id]: target.value,
               });
             }}
+            type={question.type}
           />
         </label>
       ))}
