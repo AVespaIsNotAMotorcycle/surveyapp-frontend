@@ -10,7 +10,6 @@ import './App.css';
 
 import { UserContextProvider } from './UserContext';
 import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
 
 const routes = {
@@ -33,8 +32,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path={routes.signUp} element={<SignUp />} />
-            <Route path={routes.signIn} element={<SignIn />} />
+            <Route
+              path={routes.signUp}
+              element={<SignIn mode="sign-up" />}
+            />
+            <Route
+              path={routes.signIn}
+              element={<SignIn mode="sign-in" />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
