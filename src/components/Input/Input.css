@@ -1,0 +1,8 @@
+.input-wrapper {
+  margin: 10px;
+  width: fit-content;
+  padding: 10px;
+}
+.input-wrapper > * {
+  display: block;
+}

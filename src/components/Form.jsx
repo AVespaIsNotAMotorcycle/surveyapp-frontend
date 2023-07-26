@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
 
+import Input from './Input';
+
 function formatValues(questions) {
   const values = {};
   questions.forEach(({ id, defaultValue }) => {
@@ -14,22 +16,19 @@ function Form({ questions, onSubmit }) {
   return (
     <form>
       {questions.map((question) => (
-        <label
+        <Input
           key={question.id}
-          htmlFor={question.id}
-        >
-          {question.label}
-          <input
-            id={question.id}
-            onChange={({ target }) => {
-              setValues({
-                ...values,
-                [question.id]: target.value,
-              });
-            }}
-            type={question.type}
-          />
-        </label>
+          id={question.id}
+          label={question.label}
+          onChange={({ target }) => {
+            setValues({
+              ...values,
+              [question.id]: target.value,
+            });
+          }}
+          value={values[question.id]}
+          type={question.type}
+        />
       ))}
       <button
         type="submit"

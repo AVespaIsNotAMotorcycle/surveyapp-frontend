@@ -13,3 +13,7 @@ nav ul li a {
 }
 nav ul li a:focus,
 nav ul li a:hover { background: grey; }
+
+form button {
+  margin: 20px;
+}
