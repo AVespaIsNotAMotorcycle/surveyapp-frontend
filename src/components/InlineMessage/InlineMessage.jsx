@@ -1,9 +1,11 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
+import './InlineMessage.css';
+
 function InlineMessage({ type, children }) {
   return (
-    <div className={`inline-message-${type}`}>
+    <div className={`inline-message-${type} inline-message`}>
       {children}
     </div>
   );

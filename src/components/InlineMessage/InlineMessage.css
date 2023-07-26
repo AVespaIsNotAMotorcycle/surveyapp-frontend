@@ -1,0 +1,17 @@
+.inline-message {
+  border-radius: 5px;
+  padding: 10px;
+  width: fit-content;
+  margin: 10px auto;
+  border: 2px solid;
+}
+
+.inline-message-error {
+  border-color: red;
+  background: pink;
+}
+
+.inline-message-success {
+  border-color: green;
+  background: lightGreen;
+}
