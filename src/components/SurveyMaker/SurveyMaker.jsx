@@ -6,13 +6,16 @@ import {
   Draggable,
 } from 'react-beautiful-dnd';
 
+// import Input from '../Input';
 import './SurveyMaker.css';
 
 /* eslint react/jsx-props-no-spreading: off */
 
 const questionProps = propTypes.shape({
   name: propTypes.string,
+  description: propTypes.string,
   id: propTypes.string,
+  type: propTypes.string,
 });
 
 function DropComponent({
@@ -40,10 +43,47 @@ DropComponent.propTypes = {
   children: propTypes.func.isRequired,
 };
 
+function QuestionEditing({
+  question,
+  updateQuestion,
+}) {
+  const {
+    id,
+    type,
+    name,
+    description,
+  } = question;
+  return (
+    <div>
+      {type}
+      <br />
+      <input
+        value={name}
+        onChange={({ target }) => {
+          updateQuestion(id, 'name', target.value);
+        }}
+      />
+      <br />
+      <textarea
+        value={description}
+        placeholder="Description"
+        onChange={({ target }) => {
+          updateQuestion(id, 'description', target.value);
+        }}
+      />
+    </div>
+  );
+}
+QuestionEditing.propTypes = {
+  question: questionProps.isRequired,
+  updateQuestion: propTypes.func.isRequired,
+};
+
 function Question({
   question,
   index,
   mode,
+  updateQuestion,
 }) {
   const {
     id,
@@ -51,7 +91,12 @@ function Question({
   } = question;
   const contents = mode === 'available'
     ? name
-    : `${id} ${name}`;
+    : (
+      <QuestionEditing
+        updateQuestion={updateQuestion}
+        question={question}
+      />
+    );
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -71,11 +116,14 @@ Question.propTypes = {
   question: questionProps.isRequired,
   index: propTypes.number.isRequired,
   mode: propTypes.oneOf(['available', 'chosen']).isRequired,
+  updateQuestion: propTypes.func,
 };
+Question.defaultProps = { updateQuestion: () => {} };
 
 function QuestionsPanel({
   questions,
   mode,
+  updateQuestion,
 }) {
   return (
     <DropComponent
@@ -98,6 +146,7 @@ function QuestionsPanel({
               question={question}
               index={index}
               mode={mode}
+              updateQuestion={updateQuestion}
             />
           ))}
           {provided.placeholder}
@@ -111,15 +160,25 @@ QuestionsPanel.propTypes = {
     questionProps,
   ).isRequired,
   mode: propTypes.oneOf(['available', 'chosen']).isRequired,
+  updateQuestion: propTypes.func,
 };
+QuestionsPanel.defaultProps = { updateQuestion: () => {} };
 
 const availableQuestions = [
-  { id: 'text-field', name: 'Text Field' },
-  { id: 'select', name: 'Select' },
+  { id: 'text-field', name: 'Text Field', type: 'text' },
+  { id: 'select', name: 'Select', type: 'select' },
 ];
 
 function SurveyMaker() {
   const [chosenQuestions, setChosenQuestions] = useState([]);
+
+  const updateQuestion = (questionID, field, value) => {
+    const question = chosenQuestions
+      .find(({ id }) => id === questionID);
+    question[field] = value;
+    setChosenQuestions([...chosenQuestions]);
+  };
+
   const onDragEnd = ({ source, destination }) => {
     if (destination.droppableId === 'available-questions') return;
 
@@ -158,6 +217,7 @@ function SurveyMaker() {
           <QuestionsPanel
             questions={chosenQuestions}
             mode="chosen"
+            updateQuestion={updateQuestion}
           />
           <QuestionsPanel
             questions={availableQuestions}
