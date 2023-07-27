@@ -1,0 +1,17 @@
+.survey-maker {
+  display: flex;
+}
+
+.available-questions,
+.chosen-questions {
+  outline: 1px solid black;
+  margin: 5px;
+  padding: 10px;
+}
+.chosen-questions { flex-grow: 1; }
+
+.question {
+  outline: 1px solid black;
+  margin: 5px;
+  padding: 10px;
+}
